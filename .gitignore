@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+
+# 编译产物
+*.o
+*.out
+*.class
+bin/
+build/
+dist/
+
+# 编辑器 / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# 数据 / 密钥（不要提交）
+*.csv
+*.xlsx
+secrets.json
+*.env
