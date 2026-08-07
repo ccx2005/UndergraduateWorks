@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>凯尔希桌宠预览</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #2D3436 0%, #1E1E1E 100%);
+    min-height: 100vh;
+    font-family: 'Microsoft YaHei', sans-serif;
+    color: #FAEEDA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .preview { text-align: center; }
+  h1 { margin: 0 0 8px; font-size: 18px; font-weight: 500; opacity: 0.7; }
+  .hint { font-size: 12px; opacity: 0.4; margin-top: 12px; }
+  .desk {
+    width: 600px;
+    height: 400px;
+    background: linear-gradient(180deg, rgba(45,52,54,0.6) 0%, rgba(30,30,30,0.9) 100%);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .window-frame {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 220px;
+    height: 400px;
+    background: rgba(255, 248, 238, 0.96);
+    border: 1px solid #4A6741;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .pet-body {
+    animation: idleBounce 2s ease-in-out infinite;
+    transform-origin: 60px 80px;
+  }
+  @keyframes idleBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .name {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: #888780;
+  }
+  .bubble {
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #FFFFFF;
+    border: 1px solid #DFE6E9;
+    border-radius: 10px;
+    padding: 6px 12px;
+    font-size: 11px;
+    color: #2D3436;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 10;
+  }
+  .panel {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    background: #1E1E1E;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-family: 'Consolas', monospace;
+    font-size: 9px;
+    color: #639922;
+  }
+  .panel-header {
+    color: #4A6741;
+    margin-bottom: 3px;
+    letter-spacing: 1px;
+  }
+  .live {
+    color: #FF6B6B;
+    animation: blink 1s infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .bar {
+    background: #4A4A4A;
+    height: 3px;
+    margin: 2px 0;
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .bar-fill { background: #639922; height: 100%; }
+  .bar-fill.warn { background: #EF9F27; }
+  .panel-row { display: flex; justify-content: space-between; margin-top: 2px; }
+  .panel-row span:first-child { color: #888780; }
+  .panel-row span:last-child { color: #639922; font-weight: bold; }
+  .footer-hint { margin-top: 20px; font-size: 11px; color: #888; }
+  .report-preview {
+    position: absolute;
+    top: 40px;
+    left: 30px;
+    width: 280px;
+    background: #FFFFFF;
+    border: 1px solid #4A6741;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    overflow: hidden;
+    z-index: 20;
+  }
+  .report-header {
+    background: #4A6741;
+    color: #FFFFFF;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .report-body { padding: 10px 12px; }
+  .report-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    font-size: 10px;
+  }
+  .report-row .label { color: #636E72; }
+  .report-row .value { font-weight: bold; }
+  .report-row .value.green { color: #00B894; }
+  .report-row .value.yellow { color: #FDCB6E; }
+  .report-divider {
+    height: 1px;
+    background: #E0DDD5;
+    margin: 8px 0;
+  }
+  .report-diag {
+    font-size: 9px;
+    color: #2D3436;
+    background: #F8F8F4;
+    padding: 6px 8px;
+    border-radius: 4px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+  <div class="preview">
+    <div class="desk">
+      <!-- 体检报告弹窗预览 -->
+      <div class="report-preview">
+        <div class="report-header">罗德岛 · 体检报告</div>
+        <div class="report-body">
+          <div class="report-row"><span class="label">CPU 占用</span><span class="value green">12.3%</span></div>
+          <div class="report-row"><span class="label">内存占用</span><span class="value yellow">58.7%</span></div>
+          <div class="report-row"><span class="label">磁盘占用</span><span class="value green">45.2%</span></div>
+          <div class="report-row"><span class="label">运行时长</span><span class="value">3天7小时</span></div>
+          <div class="report-row"><span class="label">温度</span><span class="value">52°C</span></div>
+          <div class="report-row"><span class="label">显卡</span><span class="value" style="font-size:9px;">Intel Iris Xe</span></div>
+          <div class="report-row"><span class="label">GPU 占用</span><span class="value green">3.0%</span></div>
+          <div class="report-divider"></div>
+          <div style="font-size:10px;font-weight:bold;color:#4A6741;margin-bottom:4px;">诊断意见</div>
+          <div class="report-diag">CPU 状态平稳。内存余量充足。综合评估：健康。</div>
+        </div>
+      </div>
+
+      <!-- 桌宠窗口 -->
+      <div class="window-frame">
+        <div class="bubble">我在，Dr...</div>
+        <svg viewBox="0 0 120 200" width="120" height="200">
+          <ellipse cx="60" cy="185" rx="30" ry="6" fill="rgba(0,0,0,0.15)"/>
+          <g class="pet-body">
+            <image href="../assets/kaltist.png" x="0" y="20" width="120" height="150"
+                   style="image-rendering: pixelated; image-rendering: crisp-edges;"/>
+          </g>
+        </svg>
+        <div class="panel">
+          <div class="panel-header">[ 凯尔希监控 ] <span class="live">● LIVE</span></div>
+          <div class="panel-row"><span>CPU</span><span class="bar" style="width:120px"><span class="bar-fill" style="width:12%"></span></span><span>12%</span></div>
+          <div class="panel-row"><span>MEM</span><span class="bar" style="width:120px"><span class="bar-fill warn" style="width:58%"></span></span><span>58%</span></div>
+          <div class="panel-row"><span>GPU</span><span class="bar" style="width:120px"><span class="bar-fill" style="width:3%"></span></span><span>3%</span></div>
+          <div class="panel-row" style="margin-top:3px"><span style="color:#888780">右键 → 体检报告 · DBL_CLK=CHAT</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-hint">凯尔希像素小人 v0.6 · 绿瞳绿外套 · GPU 监控 · 体检报告功能 · 气泡贴近头部</div>
+  </div>
+</body>
+</html>
