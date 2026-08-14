@@ -39,6 +39,7 @@ from PyQt5.QtWidgets import (
 )
 
 from converter import (
+    DEFAULT_ICON_SIZES,
     convert_to_ico,
     get_ico_sizes,
     set_shortcut_icon,
@@ -523,6 +524,28 @@ class MainWindow(QWidget):
         self._lnk_row_widgets = (self.lnk_edit, lnk_btn)
         self._set_lnk_enabled(False)
 
+        # ---- 嵌入尺寸（可选档位）
+        layout.addWidget(self._section("嵌入尺寸  勾选要打包进 ICO 的档位"))
+        size_sel = QHBoxLayout()
+        size_sel.setSpacing(8)
+        self.size_checks: dict[tuple[int, int], QCheckBox] = {}
+        for (w, h) in DEFAULT_ICON_SIZES:
+            chk = QCheckBox(f"{w}")
+            chk.setChecked(True)
+            chk.setObjectName("SizeCheck")
+            self.size_checks[(w, h)] = chk
+            size_sel.addWidget(chk)
+        size_sel.addStretch(1)
+        all_btn = QPushButton("全选")
+        all_btn.setObjectName("Ghost")
+        all_btn.clicked.connect(lambda: self._set_all_sizes(True))
+        none_btn = QPushButton("清空")
+        none_btn.setObjectName("Ghost")
+        none_btn.clicked.connect(lambda: self._set_all_sizes(False))
+        size_sel.addWidget(all_btn)
+        size_sel.addWidget(none_btn)
+        layout.addLayout(size_sel)
+
         layout.addStretch(1)
 
         # ---- 主操作
@@ -692,6 +715,10 @@ class MainWindow(QWidget):
             self._lnk_path = None
             self.lnk_edit.clear()
 
+    def _set_all_sizes(self, checked: bool) -> None:
+        for chk in self.size_checks.values():
+            chk.setChecked(checked)
+
     # ------------------------------------------------------------ 各尺寸预览
     def _clear_size_preview(self) -> None:
         while self.size_layout.count():
@@ -748,6 +775,11 @@ class MainWindow(QWidget):
             self._set_status("队列为空，请先添加图片。", "err")
             return
 
+        selected = [s for s in DEFAULT_ICON_SIZES if self.size_checks[s].isChecked()]
+        if not selected:
+            self._set_status("请至少勾选一种嵌入尺寸档位。", "err")
+            return
+
         self.convert_btn.setEnabled(False)
         self._set_status(f"正在转换 {len(self._items)} 张…", "info")
         QApplication.processEvents()
@@ -757,7 +789,7 @@ class MainWindow(QWidget):
         first_ico: str | None = None
         for idx, it in enumerate(self._items):
             try:
-                out = convert_to_ico(it["path"], None)
+                out = convert_to_ico(it["path"], None, sizes=selected)
                 it["out"] = str(out)
                 it["converted"] = True
                 it["status"] = "已生成"
