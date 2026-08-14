@@ -20,11 +20,11 @@
 
 ## 🖼️ 界面预览
 
-> 截图待补充（运行后用窗口截图替换此处）。
+深色工作室风格界面：批量队列、棋盘格透明预览、可选嵌入尺寸、状态反馈。
 
 | 主界面 | 各尺寸预览 |
 | --- | --- |
-| `screenshot-main.png` | `screenshot-sizes.png` |
+| ![主界面](screenshot-main.png) | ![各尺寸预览](screenshot-sizes.png) |
 
 ---
 
